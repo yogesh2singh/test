@@ -1,48 +1,22 @@
-<form [formGroup]="stateForm">
-  <mat-form-field>
-    <input type="text" matInput placeholder="States Group" formControlName="stateGroup" required [matAutocomplete]="autoGroup">
-      <mat-autocomplete #autoGroup="matAutocomplete">
-        <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter">
-          <mat-option *ngFor="let name of group.names" [value]="name">
-            {{name}}
-          </mat-option>
-      </mat-optgroup>
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Assignee" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selectedItem($event)">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option.name}}
+      </mat-option>
     </mat-autocomplete>
   </mat-form-field>
 </form>
 
-<data-table-example></data-table-example>
 
-<div id="map" class="map"></div>
+<!-- Copyright 2019 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
 
-<agm-map 
-  [latitude]="lat"
-  [longitude]="lng"
-  [zoom]="zoom"
-  [disableDefaultUI]="false"
-  [zoomControl]="false"
-  (mapClick)="mapClicked($event)">
-
-  <agm-marker 
-      *ngFor="let m of markers; let i = index"
-      (markerClick)="clickedMarker(m.label, i)"
-      [latitude]="m.lat"
-      [longitude]="m.lng"
-      [label]="m.label"
-      [markerDraggable]="m.draggable"
-      (dragEnd)="markerDragEnd(m, $event)">
-      
-    <agm-info-window>
-      <strong>InfoWindow content</strong>
-    </agm-info-window>
-    
-  </agm-marker>
-  
-  <agm-circle [latitude]="lat + 0.3" [longitude]="lng" 
-      [radius]="5000"
-      [fillColor]="'red'"
-      [circleDraggable]="true"
-      [editable]="true">
-  </agm-circle>
-
-</agm-map>
+<div *ngIf="selectedType == 'Name'">
+  <data-table-example></data-table-example>
+</div>
+<div *ngIf="selectedType=='Map'">
+  <app-map> </app-map>
+</div>

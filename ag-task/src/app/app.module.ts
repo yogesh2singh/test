@@ -21,11 +21,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataTableExampleComponent } from './data-table/data-table.component';
 import { AgmCoreModule } from '@agm/core';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DataTableExampleComponent
+    DataTableExampleComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

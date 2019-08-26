@@ -6,10 +6,7 @@ import {
   TileLayer,
   Marker,
   Popup
-  // PropTypes as MapPropTypes
 } from "react-leaflet";
-
-// const ReactLeaflet = require("react-leaflet");
 
 const MyPopupMarker = ({ children, position }) => (
   <Marker position={position}>
@@ -18,12 +15,9 @@ const MyPopupMarker = ({ children, position }) => (
     </Popup>
   </Marker>
 );
-// MyPopupMarker.propTypes = {
-//   children: MapPropTypes.children,
-//   position: MapPropTypes.latlng
-// };
 
 const MyMarkersList = ({ markers }) => {
+  
   const items = markers.map(({ key, ...props }) => (
     <MyPopupMarker key={key} {...props} />
   ));
@@ -35,35 +29,28 @@ MyMarkersList.propTypes = {
 
 export default class CustomMap extends Component {
   state = {
-    lat: 45.6982642,
-    lng: 9.6772698,
+    lat: 18.5247663,
+    lng: 73.7929271,
     zoom: 13,
     markers: []
   };
 
-  constructor() {
-    super();
-    // const { markers } = this.props;
-  }
-
   render() {
+    console.log('Custom Map', this.props);
+    if(this.props && this.props.markerValue) {
+      this.state.markers = [this.props.markerValue];
+      console.log('state ', this.state);
+    }
     const center = [this.state.lat, this.state.lng];
-
+    let latLng = this.state.markers[0].split(",");
+    let lat = latLng[0];
+    let lng = latLng[1];
+    console.log('this.state.markers ', parseInt(this.state.markers));
     const markers = [
       {
         key: "marker1",
-        position: [45.69836455, 9.6472798],
-        children: "Lampione rotto"
-      },
-      {
-        key: "marker2",
-        position: [45.6980459, 9.6872748],
-        children: "Segnalazione: tombino rotto"
-      },
-      {
-        key: "marker3",
-        position: [45.69856455, 9.6570798],
-        children: "Segnalazione: rumore di notte"
+        position: [lat, lng],
+        children: "Pune"
       }
     ];
     return (
